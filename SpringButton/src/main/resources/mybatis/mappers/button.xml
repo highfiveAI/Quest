@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.himedia.kdt.mappers.ButtonMapper">
+	<select id="selectAllPhone" resultType="ButtonVo">
+		SELECT id, name, count FROM phone
+	</select>
+	<insert id="insertPhone" parameterType="ButtonVo">
+		INSERT INTO phone (name, count)
+     	VALUES (#{name}, #{count});
+	</insert>
+	<update id="updatePhone" parameterType="int">
+	UPDATE phone
+	SET count = count + 1
+	WHERE id = #{id};
+	</update>
+</mapper>
