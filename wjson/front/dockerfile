@@ -1,0 +1,17 @@
+# Node 18 이미지 사용 (Vite, React 실행에 적합)
+FROM node:18
+
+# 작업 디렉토리 /app
+WORKDIR /app
+
+# 프로젝트 소스 전체 복사
+COPY . .
+
+# 의존성 설치
+RUN npm install
+
+# Vite 기본 포트 (5173)
+EXPOSE 5173
+
+# 개발 서버 실행 (호스트 외부 접근 허용)
+CMD ["npm", "run", "dev", "--", "--host"]
