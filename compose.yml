@@ -1,0 +1,45 @@
+services:
+  frontend:
+    image: react_button
+    container_name: button-react-compose-container
+    ports:
+      - "5173:80"
+    networks:
+      - my-network
+
+  api-server:
+    image: buttonserver
+    container_name: button-spring-compose-container
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://button-mysql-compose-container:3306/${MYSQL_DATABASE}
+      SPRING_DATASOURCE_USERNAME: ${MYSQL_USER}
+      SPRING_DATASOURCE_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "18088:8930"
+    networks:
+      - my-network
+    depends_on:
+      - db
+
+  db:
+    image: mysql-custom
+    container_name: button-mysql-compose-container
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    ports:
+      - "13306:3306"
+    networks:
+      - my-network
+
+networks:
+  my-network:
+    external: true # 기존 네트워크에 합류
+
+# run
+# docker compose --env-file .env up -d
+
+# 서비스 종료
+# docker compose down
