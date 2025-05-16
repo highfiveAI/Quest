@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>카운터 프론트엔드</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; margin-top: 100px; }
+    #count { font-size: 2em; margin: 20px; }
+    button { font-size: 1.2em; margin: 10px; padding: 10px 30px; }
+  </style>
+</head>
+<body>
+  <h1>카운터</h1>
+  <div id="count">0</div>
+  <button id="inc">증가</button>
+  <button id="dec">감소</button>
+
+  <script>
+    const apiBase = 'http://localhost:3001';
+    const countLabel = document.getElementById('count');
+    const incBtn = document.getElementById('inc');
+    const decBtn = document.getElementById('dec');
+
+    async function fetchCount() {
+      const res = await fetch(apiBase + '/count');
+      const data = await res.json();
+      countLabel.textContent = data.count;
+    }
+
+    incBtn.onclick = async () => {
+      await fetch(apiBase + '/increment', { method: 'POST' });
+      fetchCount();
+    };
+    decBtn.onclick = async () => {
+      await fetch(apiBase + '/decrement', { method: 'POST' });
+      fetchCount();
+    };
+
+    fetchCount();
+  </script>
+</body>
+</html> 
