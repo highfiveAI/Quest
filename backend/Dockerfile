@@ -1,12 +1,5 @@
-# backend/Dockerfile
-FROM node:20-alpine
-
-WORKDIR /usr/src/app
-
-COPY package*.json ./
-RUN npm install
-
+FROM python:3.9
+WORKDIR /app
 COPY . .
-
-EXPOSE 3000
-CMD [ "node", "server.js" ]
+RUN pip install -r requirements.txt
+CMD ["python", "app.py"]
